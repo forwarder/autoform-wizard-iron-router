@@ -1,6 +1,9 @@
 Wizard.registerRouter('iron:router', {
   go: function(name, stepId) {
-    Router.go(name, this.getParams(stepId));
+    var p = {};
+    if( !!this.getParams(stepId).query && $.param(this.getParams(stepId).query) != "" ) p.query = $.param(this.getParams(stepId).query);
+    if( !!this.getParams(stepId).hash ) p.hash = this.getParams(stepId).hash;
+    Router.go(name, this.getParams(stepId), p);
   },
   getParams: function(stepId) {
     return Tracker.nonreactive(function() {
